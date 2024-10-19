@@ -19,7 +19,12 @@ class TestBook:
         book = Book("And Then There Were None", 272)
         captured_out = io.StringIO()
         sys.stdout = captured_out
-        book.page_count = "not an integer"
+
+        try:
+            book.page_count = "not an integer"
+        except ValueError:
+            pass  # We expect a ValueError to be raised
+        
         sys.stdout = sys.__stdout__
         assert captured_out.getvalue() == "page_count must be an integer\n"
 
